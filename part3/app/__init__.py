@@ -18,9 +18,10 @@ def create_app(config_class="app.config.DevelopmentConfig"):
 
     CORS(app, resources={
         r"/*": {
-            "origins": ["http://localhost:5000", "http://127.0.0.1:5000"],
+            "origins": "*",
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"]
+            "allow_headers": ["Content-Type", "Authorization"],
+            "supports_credentials": True
         }
     })
 
