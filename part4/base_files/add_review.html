@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Review</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="../images/logo.png"   class="logo" alt="Logo">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="login.html" class="logo" alt="Logo"></a>
+        </nav>
+    </header>
+
+    <main>
+       <h1>Add Review</h1>
+       <form class="form add-review">
+        <label for="rating">Rating (1-5):</label>
+
+        <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5" required>
+        <label for="star5">★</label>
+        
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4">★</label>
+
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3">★</label>
+
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2">★</label>
+
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1">★</label>
+        </div>
+
+        <label for="comment">Comment</label>
+        <textarea id="comment" name="comment" rows="4" required>
+        </textarea>
+
+        <button type="submit">Submit</button>
+       </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 All rights reserved</p>
+    </footer>
+</body>
+</html>
