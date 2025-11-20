@@ -1,16 +1,17 @@
-import uuid
 from datetime import datetime
+from app import db
+import uuid
 
 
 class BaseModel:
     """Base class for all models"""
 
-    def __init__(self, *args, **kwargs):
-        from app import db
-        self.__abstract__ = True
-        self.id = kwargs.get("id", str(uuid.uuid4()))
-        self.created_at = kwargs.get("created_at", datetime.utcnow())
-        self.updated_at = kwargs.get("updated_at", datetime.utcnow())
+    __abstract__ = True
+
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
 
     def save(self):
         from app import db
@@ -19,7 +20,6 @@ class BaseModel:
         db.session.commit()
 
     def update(self, data):
-        from app import db
         for key, value in data.items():
             if hasattr(self, key):
                 setattr(self, key, value)
@@ -27,7 +27,6 @@ class BaseModel:
         db.session.commit()
 
     def delete(self):
-        from app import db
         db.session.delete(self)
         db.session.commit()
 
