@@ -12,36 +12,30 @@
         <img src="../images/logo.png" class="logo" alt="logo">
         <nav>
             <a href="index.html">Home</a>
-            <a href="login.html" class="login-button">Login</a>
+            <a href="login.html" id="login-link" class="login-button">Login</a>
         </nav>
     </header>
 
     <main>
         <h1>List of Places</h1>
-        <div class="place-card">
-            <h3>Appartment</h3>
-            <img src="../images/apartment.jpg" alt="apartment">
-            <p>Price: 90€/night</p>
-            <a href="place.html" class="details-button">View Details</a>
+
+        <div class="filters">
+            <label for="price-filter">Price maximum :</label>
+            <select id="price-filter">
+                <option value="all">All</option>
+                <option value="50">50€</option>
+                <option value="100">100€</option>
+                <option value="200">200€</option>
+            </select>
         </div>
 
-        <div class="place-card">
-            <h3>Beach House</h3>
-            <img src="../images/beach_house.jpg" alt="beach-house">
-            <p>Price: 210€/night</p>
-            <a href="place.html" class="details-button">View Details</a>
-        </div>
-
-        <div class="place-card">
-            <h3> City Center Appartement</h3>
-            <img src="../images/center_city.jpg" alt="center-city">
-            <p>Price: 150€/night</p>
-            <a href="place.html" class="details-button">View Details</a>
-        </div>
+        <section id="places-list">
+        </section>
     </main>
 
     <footer>
         <p>&copy; 2025 All rights reserved</p>
     </footer>
+<script src="./scripts.js"></script>
 </body>
 </html>
