@@ -7,44 +7,33 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header>
         <img src="../images/logo.png"   class="logo" alt="Logo">
         <nav>
             <a href="index.html">Home</a>
-            <a href="login.html" class="loggin-button">Login</a>
+            <a href="#" id="login-link" class="login-button">Login</a>
         </nav>
     </header>
 
     <main>
-        <h1>Cozy Apartment</h1>
+        <h1 id="place-title"></h1>
 
-        <div class="place-details">
-            <p class="place-info"><strong>Host: </strong>Franck</p>
-            <p class="place-info"><strong>Price: </strong>100€</p>
-            <p class="place-info"><strong>Description: </strong>A beautiful apartment in the city center.</p>
-            <p class="place-info"><strong>Amenities: </strong>Piscine, WI-FI, Parking</p>
-        </div>
+        <div id="place-details"></div>
 
         <h2>Reviews</h2>
-        <div class="review-card">
-            <p><strong>User: </strong>Moussa</p>
-            <p>Rating: ★★★★☆</p>
-            <p>Very comfortable.</p>
-        </div>
+        <div id="reviews"></div>
 
-        <div class="review-card">
-            <p><strong>User: </strong>Christophe</p>
-            <br>
-            <p>Rating: ★★★★★</p>
-            <br>
-            <p>Amazing place and appartment.</p>
-            <br>
-        <a href="add_review.html" class="add-review">Add Review</a>
+        <div id="add-review">
+        <button id="add-review-btn" class="add-review">Add Review</button>
+        </div>
     </main>
 
     <footer>
         <p>&copy; 2025 All right reserved</p>
     </footer>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
