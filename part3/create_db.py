@@ -1,14 +1,15 @@
 from app import create_app, db
 from app.services.facade import facade
+from app.models import User
 
 app = create_app()
 
 with app.app_context():
-    # Création des tables
+    # Create tables
     db.create_all()
-    print("Tables créées ✅")
+    print("Tables created ✅\n")
 
-    # Création user test si besoin
+    # Create test user if not exists
     user = facade.get_user_by_email("test@example.com")
     if not user:
         user = facade.create_user({
@@ -18,14 +19,14 @@ with app.app_context():
             "password": "1234",
             "is_admin": False
         })
-        print("User test créé : test@example.com / 1234")
+        print("Test user created: test@example.com / 1234\n")
 
-    print("\n--- Création de places de test ---")
+    print("--- Creating test places ---\n")
 
     places_to_create = [
         {
-            "title": "Studio Paris Centre",
-            "description": "Studio cosy proche de tout.",
+            "title": "Paris Center Studio",
+            "description": "Cozy studio in the heart of Paris.",
             "price": 80.0,
             "latitude": 48.8566,
             "longitude": 2.3522,
@@ -35,8 +36,8 @@ with app.app_context():
             "surface": 25.0
         },
         {
-            "title": "Maison Toulouse Sud",
-            "description": "Grande maison familiale.",
+            "title": "Toulouse South House",
+            "description": "Spacious family house in Toulouse.",
             "price": 120.0,
             "latitude": 43.6045,
             "longitude": 1.4442,
@@ -46,8 +47,8 @@ with app.app_context():
             "surface": 120.0
         },
         {
-            "title": "Appartement Lyon Confluence",
-            "description": "Appartement moderne dans un quartier dynamique.",
+            "title": "Lyon Confluence Apartment",
+            "description": "Modern apartment in a dynamic neighborhood.",
             "price": 95.0,
             "latitude": 45.7485,
             "longitude": 4.8467,
@@ -57,8 +58,8 @@ with app.app_context():
             "surface": 75.0
         },
         {
-            "title": "Loft Marseille Vieux Port",
-            "description": "Loft lumineux avec vue port.",
+            "title": "Marseille Vieux Port Loft",
+            "description": "Bright loft with port view.",
             "price": 150.0,
             "latitude": 43.2965,
             "longitude": 5.3698,
@@ -68,8 +69,8 @@ with app.app_context():
             "surface": 55.0
         },
         {
-            "title": "Chalet Grenoble Montagne",
-            "description": "Chalet rustique idéal ski.",
+            "title": "Grenoble Mountain Chalet",
+            "description": "Rustic chalet perfect for skiing.",
             "price": 200.0,
             "latitude": 45.1885,
             "longitude": 5.7245,
@@ -81,12 +82,25 @@ with app.app_context():
     ]
 
     existing_titles = {p.title for p in facade.get_all_places()}
+    created_places = []
 
     for place_data in places_to_create:
         if place_data["title"] not in existing_titles:
             place = facade.create_place(place_data)
-            print(f"Place créée : {place.title}")
+            created_places.append(place)
+            print(f"Place created: {place.title}")
         else:
-            print(f"Place déjà existante : {place_data['title']}")
+            print(f"Place already exists: {place_data['title']}")
 
-    print("✔ Création des places terminée")
+    print("\n--- Creating test reviews ---\n")
+
+    for place in created_places:
+        reviews_to_create = [
+            {"user_id": user.id, "place_id": place.id, "rating": 5, "text": "Amazing stay! Highly recommended."},
+            {"user_id": user.id, "place_id": place.id, "rating": 4, "text": "Very comfortable and clean."}
+        ]
+        for rev in reviews_to_create:
+            facade.create_review(rev)
+            print(f"Review added for {place.title}: {rev['text']}")
+
+    print("\n✔ Database setup complete!")
