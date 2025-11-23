@@ -134,7 +134,6 @@ class PlaceResource(Resource):
         
         reviews = [{
             "id": review.id,
-            "title": review.title,
             "text": review.text,
             "rating": review.rating,
             "user": {

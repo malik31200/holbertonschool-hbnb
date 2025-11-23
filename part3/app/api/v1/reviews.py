@@ -22,7 +22,11 @@ class ReviewList(Resource):
     def post(self):
         """Register a new review"""
         current_user = get_jwt_identity()
-        user_id = current_user.get('id')
+        if isinstance(current_user, dict):
+            user_id = current_user.get('id')
+
+        else:
+            user_id = current_user 
 
         try:
             data = request.get_json()

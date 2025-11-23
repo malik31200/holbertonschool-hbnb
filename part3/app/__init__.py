@@ -19,7 +19,7 @@ def create_app(config_class=DevelopmentConfig):
     app.config['JWT_SECRET_KEY'] = app.config['SECRET_KEY']
 
     # JWT config pour cookies
-    app.config['JWT_TOKEN_LOCATION'] = ['cookies']
+    app.config['JWT_TOKEN_LOCATION'] = ['cookies', 'headers']
     app.config['JWT_COOKIE_SECURE'] = False  # True si HTTPS en production
     app.config['JWT_ACCESS_COOKIE_PATH'] = '/'
     app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # mettre True si tu gères CSRF
