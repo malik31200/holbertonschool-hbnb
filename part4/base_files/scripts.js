@@ -91,9 +91,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     checkAuthentication();
 
     const token = getCookie('token');
-    if (!token) return;
 
     try{
+        const headers = {};
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+        
         const response = await fetch('http://127.0.0.1:5000/api/v1/places/', {
             headers: {
                 'Authorization': `Bearer ${token}`
