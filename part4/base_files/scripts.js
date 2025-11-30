@@ -128,13 +128,20 @@ function displayPlaces(places) {
         div.className = "place-card";
         div.dataset.price = place.price;
 
+        const imageUrl = place.photos && place.photos.length > 0 
+            ? `http://127.0.0.1:5000${place.photos[0]}`
+            : 'http://127.0.0.1:5000/images/placeholder.jpg';
+
         div.innerHTML = `
-            <h3>${place.title}</h3>
-            <p>${place.description}</p>
-            <p><strong>Price:</strong>${place.price}€/night</p>
-            <p><strong>Location:</strong>${place.location}</p>
-            <p><strong>Location:</strong> ${place.latitude}, ${place.longitude}</p>
-            <button class="details-button" onclick="window.location.href='place.html?id=${place.id}'">Details</button>
+            <img src="${imageUrl}" alt="${place.title}" class="place-card-image" onerror="this.style.display='none'">
+            <div class="place-card-content">
+                <h3>${place.title}</h3>
+                <p>${place.description}</p>
+                <p><strong>Price:</strong>${place.price}€/night</p>
+                <p><strong>Location:</strong>${place.location}</p>
+                <p><strong>Location:</strong> ${place.latitude}, ${place.longitude}</p>
+                <button class="details-button" onclick="window.location.href='place.html?id=${place.id}'">Details</button>
+            </div>
         `;
 
         list.appendChild(div);
@@ -197,8 +204,20 @@ function displayPlaceDetails(place) {
     const ownerName = place.owner ? `${place.owner.first_name || ''} ${place.owner.last_name || ''}`.trim() : 'Unknown';
     const amenities = Array.isArray(place.amenities) ? place.amenities.map(a => a.name).join(', ') : '';
 
+    let photosHTML = '';
+    if (place.photos && place.photos.length > 0) {
+        photosHTML = '<div class="place-photos">';
+        place.photos.forEach(photoUrl => {
+            photosHTML += `<img src="http://127.0.0.1:5000${photoUrl}" alt="${place.title}" class="place-photo" onerror="this.src='http://127.0.0.1:5000/images/placeholder.jpg'">`;
+        });
+        photosHTML += '</div>';
+    } else {
+        photosHTML = '<p><em>No photos avaible</em></p>';
+    }
+
     detailsElt.innerHTML = `
         <div class = "place-details">
+            ${photosHTML}
             <div style="flex:1">
                 <p class="place-info"><strong>Host: </strong>${ownerName}</p>
                 <p class="place-info"><strong>Price: </strong>${place.price ?? 'N/A'}€</p>
