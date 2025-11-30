@@ -111,6 +111,7 @@ class PlaceList(Resource):
                 'rooms': place.rooms,
                 'capacity': place.capacity,
                 'surface': place.surface,
+                'photos': place.photos if place.photos else [],
                 'amenities': [amenity.name for amenity in place.amenities]
             })
         return places, 200

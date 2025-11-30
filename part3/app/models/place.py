@@ -26,6 +26,7 @@ class Place(db.Model):
     capacity = db.Column(db.Integer, default=1)
     surface = db.Column(db.Float, default=0.0)
     description = db.Column(db.String(512), default="")
+    photos = db.Column(db.JSON, default=list)
 
     owner = db.relationship("User", back_populates="places", lazy=True)
 
@@ -87,6 +88,7 @@ class Place(db.Model):
             "latitude": self.latitude,
             "longitude": self.longitude,
             "owner_id": self.owner_id,
+            "photos": self.photos or [],
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }

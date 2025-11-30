@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask_restx import Api
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from app.config import DevelopmentConfig
+import os
 
 bcrypt = Bcrypt()
 jwt = JWTManager()
@@ -14,15 +15,15 @@ def create_app(config_class=DevelopmentConfig):
     app = Flask(__name__)
     app.config.from_object(config_class)
 
-    # SECRET_KEY et JWT_SECRET_KEY
+    # SECRET_KEY and JWT_SECRET_KEY
     app.config['SECRET_KEY'] = app.config.get('SECRET_KEY', 'super-secret-key-change-this')
     app.config['JWT_SECRET_KEY'] = app.config['SECRET_KEY']
 
-    # JWT config pour cookies
+    # JWT config for cookies
     app.config['JWT_TOKEN_LOCATION'] = ['cookies', 'headers']
-    app.config['JWT_COOKIE_SECURE'] = False  # True si HTTPS en production
+    app.config['JWT_COOKIE_SECURE'] = False
     app.config['JWT_ACCESS_COOKIE_PATH'] = '/'
-    app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # mettre True si tu gères CSRF
+    app.config['JWT_COOKIE_CSRF_PROTECT'] = False 
 
     bcrypt.init_app(app)
     jwt.init_app(app)
@@ -50,12 +51,22 @@ def create_app(config_class=DevelopmentConfig):
     api.add_namespace(amenities_ns, path='/api/v1/amenities')
     api.add_namespace(auth_ns, path='/api/v1/auth')
 
+    IMAGES_FOLDER = '/home/malik31200/holbertonschool-hbnb/part4/base_files/images'
+
+    @app.route('/images/<path:filename>')
+    def serv_image(filename):
+        return send_from_directory(IMAGES_FOLDER,filename)
+
     # CORS
     CORS(app, resources={
         r"/api/v1/*": {
             "origins": ["http://localhost:8000", "http://127.0.0.1:8000"],
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             "allow_headers": ["Content-Type", "Authorization"],
+        },
+        r"/images/*": {
+            "origins": ["http://localhost:8000", "http://127.0.0.1:8000"],
+             "methods": ["GET"],
         }
     }, supports_credentials=True)
 
